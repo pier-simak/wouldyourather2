@@ -17,6 +17,11 @@ export default function Nav (props) {
             </NavLink>
           </li>
         )}
+        <li>
+          <NavLink to='/leaderboard' exact activeClassName='active'>
+            Leader Board
+          </NavLink>
+        </li>
         {props.loggedIn === false ? null : (
           <li>
             <NavLink to='/logout' activeClassName='active'>
@@ -24,6 +29,7 @@ export default function Nav (props) {
             </NavLink>
           </li>
         )}
+
       </ul>
     </nav>
   )
