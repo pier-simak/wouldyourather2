@@ -30,3 +30,11 @@ export function handleUserData () {
       })
   }
 }
+
+export function handleLogin (id) {
+  return (dispatch) => {
+    dispatch(showLoading())
+    dispatch(setAuthedUser(id))
+    dispatch(hideLoading())
+  }
+}
