@@ -6,6 +6,7 @@ import Dashboard from './Dashboard'
 import LoadingBar from 'react-redux-loading'
 import NewTweet from './NewTweet'
 import TweetPage from './TweetPage'
+import LogOutPage from './LogOutPage'
 import Nav from './Nav'
 
 class App extends Component {
@@ -18,13 +19,14 @@ class App extends Component {
         <Fragment>
           <LoadingBar />
           <div className='container'>
-            <Nav />
+            <Nav loggedIn={this.props.loggedIn}/>
             {this.props.loading === true
               ? null
               : <div>
                   <Route path='/' exact component={Dashboard} />
                   <Route path='/tweet/:id' component={TweetPage} />
                   <Route path='/new' component={NewTweet} />
+                  <Route path='/logout' component={LogOutPage} />
                 </div>}
           </div>
         </Fragment>
@@ -33,9 +35,10 @@ class App extends Component {
   }
 }
 
-function mapStateToProps ({ users }) {
+function mapStateToProps ({ users, authedUser }) {
   return {
-    loading: Object.values(users).length === 0
+    loading: Object.values(users).length === 0,
+    loggedIn: authedUser !== null
   }
 }
 

@@ -1,7 +1,7 @@
 import React from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, Link } from 'react-router-dom'
 
-export default function Nav () {
+export default function Nav (props) {
   return (
     <nav className='nav'>
       <ul>
@@ -15,6 +15,13 @@ export default function Nav () {
             New Tweet
           </NavLink>
         </li>
+        {props.loggedIn === false ? null : (
+          <li>
+            <NavLink to='/logout' activeClassName='active'>
+              Logout
+            </NavLink>
+          </li>
+        )}
       </ul>
     </nav>
   )

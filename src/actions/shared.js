@@ -32,6 +32,7 @@ export function handleUserData () {
 }
 
 export function handleLogin (id) {
+  console.log("handel login")
   return (dispatch) => {
     dispatch(showLoading())
     dispatch(setAuthedUser(id))
