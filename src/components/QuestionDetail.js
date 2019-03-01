@@ -27,6 +27,11 @@ class QuestionDetail extends Component {
     render() {
         let option = checkOption(this.props.users,this.props.authedUser,this.props.selectquestion)
         let det = this.getQuestionDetail(this.props.selectquestion)
+        let vote1count = det.optionOne.votes.length
+        let vote2count = det.optionTwo.votes.length
+        let votetotal = vote1count+vote2count
+        let percent1 = (vote1count/(votetotal))*100
+        let percent2 = (vote2count/(votetotal))*100
         return(
             <div className='center'>
             {option==="" ? (
@@ -43,10 +48,13 @@ class QuestionDetail extends Component {
                 <div>
                     <h3>{"Asked By "+getNameById(this.props.users,det.author)}</h3>
                     <h4>Results:</h4>
-                    <span>{det.optionOne.text+" "}</span>
-                    {option === "optionOne" ? <span>(Your vote)</span>: null}<p></p>
-                    <span>{det.optionTwo.text+" "}</span>
+                    <span>{"Would you rather "+det.optionOne.text+" ? "}</span>
+                    {option === "optionOne" ? <span>(Your vote)</span>: null}
+                    <div>{vote1count+" out of "+votetotal+" votes ("+percent1+"%)"}</div>
+                    <p></p>
+                    <span>{"Would you rather "+det.optionTwo.text+" ? "}</span>
                     {option === "optionTwo" ? <span>(Your vote)</span>: null}
+                    <div>{vote2count+" out of "+votetotal+" votes ("+percent2+"%)"}</div>
                 </div>
             )}
                 
