@@ -1,6 +1,7 @@
 import {
   _getUsers,
-  _getQuestions
+  _getQuestions,
+  _saveQuestionAnswer
 } from './_DATA.js'
 
 export function getUserData () {
@@ -15,6 +16,15 @@ export function getQuestionData () {
   return Promise.all([
     _getQuestions()
   ]).then(([questions]) => ({
+    questions
+  }))
+}
+
+export function saveQuestionAnswer ( authedUser, qid, answer ) {
+  return Promise.all([
+    _saveQuestionAnswer( authedUser, qid, answer )
+  ]).then(([users,questions]) => ({
+    users,
     questions
   }))
 }

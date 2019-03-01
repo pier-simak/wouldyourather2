@@ -1,5 +1,5 @@
 import { getInitialData } from '../utils/api'
-import { getUserData,getQuestionData } from '../utils2/api'
+import { getUserData,getQuestionData,saveQuestionAnswer } from '../utils2/api'
 import { receiveUsers } from '../actions/users'
 import { receiveQuestions } from '../actions/questions'
 import { selectQuestion } from '../actions/questions'
@@ -38,6 +38,18 @@ export function handleQuestionData () {
     dispatch(showLoading())
     return getQuestionData()
       .then(({ questions }) => {
+        dispatch(receiveQuestions(questions))
+        dispatch(hideLoading())
+      })
+  }
+}
+
+export function handleSaveQuestionAnswer ( authedUser, qid, answer ) {
+  return (dispatch) => {
+    dispatch(showLoading())
+    return saveQuestionAnswer( authedUser, qid, answer )
+      .then(({ users,questions }) => {
+        dispatch(receiveUsers(users))
         dispatch(receiveQuestions(questions))
         dispatch(hideLoading())
       })

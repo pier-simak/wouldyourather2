@@ -10,6 +10,7 @@ class QuestionCard extends Component {
                 <button onClick={() => {
                     this.props.hideContainer() 
                     this.props.dispatch(handleSelectQuestion(this.props.qid))}}>View Poll</button>
+                    <p></p>
             </div>
         )
     }
