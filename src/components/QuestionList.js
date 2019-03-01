@@ -12,6 +12,7 @@ function Answered(props){
                     hideContainer={props.hideContainer}
                     key={qu.id}
                     qid={qu.id}
+                    typeC="answered"
                     author={getNameById(props.users,qu.author)}
                     question={qu.optionOne.text}></QuestionCard> :
                 null
@@ -27,6 +28,7 @@ function Unanswered(props){
                     hideContainer={props.hideContainer}
                     key={qu.id}
                     qid={qu.id}
+                    typeC="unanswered"
                     author={getNameById(props.users,qu.author)}
                     question={qu.optionOne.text}></QuestionCard> :
                 null

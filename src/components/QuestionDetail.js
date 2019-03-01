@@ -29,15 +29,27 @@ class QuestionDetail extends Component {
         let det = this.getQuestionDetail(this.props.selectquestion)
         return(
             <div className='center'>
-                <h3>{"Asked By "+getNameById(this.props.users,det.author)}</h3>
-                <h4>Results:</h4>
-                <span>{det.optionOne.text+" "}</span>
-                {option === "optionOne" ? <span>(Your vote)</span>: null}
-                {option === "" ? <button ref={(b1)=> this.btnvote1 = b1} onClick={() => {this.saveQuestionAnswer("optionOne")}}>Vote</button>: null}
-                <p></p>
-                <span>{det.optionTwo.text+" "}</span>
-                {option === "optionTwo" ? <span>(Your vote)</span>: null}
-                {option === "" ? <button ref={(b2)=> this.btnvote2 = b2} onClick={() => {this.saveQuestionAnswer("optionTwo")}}>Vote</button>: null}
+            {option==="" ? (
+                <div>
+                    <h3>{getNameById(this.props.users,det.author) + " Asks : "}</h3>
+                        <h4>Would You Rather...</h4>
+                        <span>{det.optionOne.text+" "}</span>
+                        <button ref={(b1)=> this.btnvote1 = b1} onClick={() => {this.saveQuestionAnswer("optionOne")}}>Vote</button>
+                        <p></p>
+                        <span>{det.optionTwo.text+" "}</span>
+                        <button ref={(b2)=> this.btnvote2 = b2} onClick={() => {this.saveQuestionAnswer("optionTwo")}}>Vote</button>
+                </div>
+            ) : (
+                <div>
+                    <h3>{"Asked By "+getNameById(this.props.users,det.author)}</h3>
+                    <h4>Results:</h4>
+                    <span>{det.optionOne.text+" "}</span>
+                    {option === "optionOne" ? <span>(Your vote)</span>: null}<p></p>
+                    <span>{det.optionTwo.text+" "}</span>
+                    {option === "optionTwo" ? <span>(Your vote)</span>: null}
+                </div>
+            )}
+                
             </div>
         )
     }
