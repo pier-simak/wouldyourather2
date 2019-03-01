@@ -1,12 +1,17 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { handleQuestionData } from '../actions/shared'
+import QuestionCard from './QuestionCard'
+
 function Answered(props){
     return (
         <div>
             {Object.values(props.q).map(qu => {
                 return props.checkAnsweredBy(qu.id,props.authedUser) === true ?
-                <div key={qu.id}>{getNameById(props.users,qu.author)+" asks:"}</div> :
+                <QuestionCard
+                    key={qu.id}
+                    author={getNameById(props.users,qu.author)}
+                    question={qu.optionOne.text}></QuestionCard> :
                 null
               })}
         </div>)
@@ -16,7 +21,10 @@ function Unanswered(props){
         <div>
             {Object.values(props.q).map(qu => {
                 return props.checkAnsweredBy(qu.id,props.authedUser) === false ?
-                <div key={qu.id}>{getNameById(props.users,qu.author)+" asks:"}</div> :
+                <QuestionCard
+                    key={qu.id}
+                    author={getNameById(props.users,qu.author)}
+                    question={qu.optionOne.text}></QuestionCard> :
                 null
               })}
         </div>)
