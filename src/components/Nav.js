@@ -10,11 +10,13 @@ export default function Nav (props) {
             Home
           </NavLink>
         </li>
-        <li>
-          <NavLink to='/new' activeClassName='active'>
-            New Tweet
-          </NavLink>
-        </li>
+        {props.loggedIn === false ? null : (
+          <li>
+            <NavLink to='/new' activeClassName='active'>
+              New Question
+            </NavLink>
+          </li>
+        )}
         {props.loggedIn === false ? null : (
           <li>
             <NavLink to='/logout' activeClassName='active'>

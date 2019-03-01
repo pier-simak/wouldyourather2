@@ -154,6 +154,15 @@ li {
   font-size: 15px;
   height: 100px;
 }
+.text {
+  border-radius: 4px;
+  border: 1px solid #dad7d7;
+  padding: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  font-size: 15px;
+  height: 25px;
+}
 
 .tweet-length {
   text-align: right;

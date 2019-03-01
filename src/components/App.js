@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { handleUserData } from '../actions/shared'
 import Dashboard from './Dashboard'
 import LoadingBar from 'react-redux-loading'
-import NewTweet from './NewTweet'
+import NewQuestion from './NewQuestion.js'
 import TweetPage from './TweetPage'
 import LogOutPage from './LogOutPage'
 import Nav from './Nav'
@@ -25,7 +25,7 @@ class App extends Component {
               : <div>
                   <Route path='/' exact component={Dashboard} />
                   <Route path='/tweet/:id' component={TweetPage} />
-                  <Route path='/new' component={NewTweet} />
+                  <Route path='/new' component={NewQuestion} />
                   <Route path='/logout' component={LogOutPage} />
                 </div>}
           </div>
