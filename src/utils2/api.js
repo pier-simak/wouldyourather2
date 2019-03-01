@@ -27,3 +27,23 @@ export function getNameById(users,id){
   }
   return ""
 }
+
+
+export function checkOption(users, userid, questionid){
+  let _users = Object.values(users)
+  let user = null
+  for(let i=0; i<_users.length; i++){
+    if(_users[i].id === userid){
+      user = _users[i]
+    }
+  }
+  let answers = user.answers
+  let qids = Object.keys(answers)
+  let option = ""
+  for(let i=0; i<qids.length; i++){
+    if(qids[i] === questionid){
+      option = Object.values(answers)[i]
+    }
+  }
+  return option
+}
