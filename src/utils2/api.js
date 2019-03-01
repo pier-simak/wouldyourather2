@@ -18,3 +18,12 @@ export function getQuestionData () {
     questions
   }))
 }
+
+export function getNameById(users,id){
+  for(let i=0; i<Object.values(users).length; i++){
+      if(Object.values(users)[i].id === id){
+          return Object.values(users)[i].name
+      }
+  }
+  return ""
+}

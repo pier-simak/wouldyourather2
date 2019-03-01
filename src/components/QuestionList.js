@@ -2,14 +2,16 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { handleQuestionData } from '../actions/shared'
 import QuestionCard from './QuestionCard'
-
+import { getNameById } from '../utils2/api'
 function Answered(props){
     return (
         <div>
             {Object.values(props.q).map(qu => {
                 return props.checkAnsweredBy(qu.id,props.authedUser) === true ?
                 <QuestionCard
+                    hideContainer={props.hideContainer}
                     key={qu.id}
+                    qid={qu.id}
                     author={getNameById(props.users,qu.author)}
                     question={qu.optionOne.text}></QuestionCard> :
                 null
@@ -22,21 +24,16 @@ function Unanswered(props){
             {Object.values(props.q).map(qu => {
                 return props.checkAnsweredBy(qu.id,props.authedUser) === false ?
                 <QuestionCard
+                    hideContainer={props.hideContainer}
                     key={qu.id}
+                    qid={qu.id}
                     author={getNameById(props.users,qu.author)}
                     question={qu.optionOne.text}></QuestionCard> :
                 null
               })}
         </div>)
 }
-function getNameById(users,id){
-    for(let i=0; i<Object.values(users).length; i++){
-        if(Object.values(users)[i].id === id){
-            return Object.values(users)[i].name
-        }
-    }
-    return ""
-}
+
 class QuestionList extends Component {
     componentDidMount(){
         this.props.dispatch(handleQuestionData())
@@ -67,12 +64,14 @@ class QuestionList extends Component {
             <div>
                 {this.props.typeQ === "answered" ? (
                     <Answered 
+                        hideContainer={this.props.hideContainer}
                         q={this.props.questions} 
                         users={this.props.users} 
                         authedUser={this.props.authedUser}
                         checkAnsweredBy={this.checkAnsweredBy.bind(this)}></Answered>
                 ) : (
                     <Unanswered 
+                        hideContainer={this.props.hideContainer}
                         q={this.props.questions} 
                         users={this.props.users} 
                         authedUser={this.props.authedUser}

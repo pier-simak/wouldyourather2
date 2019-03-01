@@ -2,6 +2,7 @@ import { getInitialData } from '../utils/api'
 import { getUserData,getQuestionData } from '../utils2/api'
 import { receiveUsers } from '../actions/users'
 import { receiveQuestions } from '../actions/questions'
+import { selectQuestion } from '../actions/questions'
 import { receiveTweets } from '../actions/tweets'
 import { setAuthedUser } from '../actions/authedUser'
 import { showLoading, hideLoading } from 'react-redux-loading'
@@ -44,10 +45,17 @@ export function handleQuestionData () {
 }
 
 export function handleLogin (id) {
-  console.log("handel login")
   return (dispatch) => {
     dispatch(showLoading())
     dispatch(setAuthedUser(id))
+    dispatch(hideLoading())
+  }
+}
+
+export function handleSelectQuestion (question) {
+  return (dispatch) => {
+    dispatch(showLoading())
+    dispatch(selectQuestion(question))
     dispatch(hideLoading())
   }
 }

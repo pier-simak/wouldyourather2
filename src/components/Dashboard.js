@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { handleLogin } from '../actions/shared'
 import QuestionList from './QuestionList'
+import QuestionDetail from './QuestionDetail'
 
 function UserData(props){
   let user = props.users.filter( function (data) {
@@ -18,6 +19,14 @@ class Dashboard extends Component {
     this.selection = React.createRef();
     this.answered = React.createRef();
     this.unanswered = React.createRef();
+    this.container = React.createRef();
+  }
+  state = {
+    isSelectedData: false
+  }
+
+  setSelectData = (con) => {
+    this.setState({isSelectedData:con})
   }
   Login = (id) => {
     if(id !== "none"){
@@ -40,6 +49,16 @@ class Dashboard extends Component {
     }
    
   }
+
+  hideContainer = () => {
+    if(this.container.style.display === "none"){
+      this.container.style.display = "block"
+      this.setSelectData(false)
+    }else{
+      this.container.style.display = "none"
+      this.setSelectData(true)
+    }
+  }
   render() {
     return (
       <div>
@@ -59,23 +78,28 @@ class Dashboard extends Component {
         ) :
         (
           <div>
-            <h3 className='center'><UserData users={this.props.users} authedUser={this.props.authedUser}></UserData></h3>
-            <div className='center'>
-              <div>
-                <button onClick={() => {this.handleClick("unanswered")}}>Unanswered Question</button>
-                <button onClick={() => {this.handleClick("answered")}}>Answered Question</button>
+            <div ref={(r)=> this.container = r}>
+              <h3 className='center'><UserData users={this.props.users} authedUser={this.props.authedUser}></UserData></h3>
+              <div className='center'>
+                <div>
+                  <button onClick={() => {this.handleClick("unanswered")}}>Unanswered Question</button>
+                  <button onClick={() => {this.handleClick("answered")}}>Answered Question</button>
+                </div>
+                <div ref={(d)=> this.unanswered = d}>
+                  <QuestionList typeQ="unanswered" hideContainer={this.hideContainer.bind(this)}></QuestionList>
+                </div>
+                <div style={pStyle} ref={(d)=> this.answered = d}>
+                  <QuestionList typeQ="answered" hideContainer={this.hideContainer.bind(this)}></QuestionList>
+                </div>
               </div>
-              <div ref={(d)=> this.unanswered = d}>
-                <QuestionList typeQ="unanswered"></QuestionList>
-              </div>
-              <div style={pStyle} ref={(d)=> this.answered = d}>
-                <QuestionList typeQ="answered"></QuestionList>
-              </div>
-            </div>
-
-            <ul className='dashboard-list'>
               
-            </ul>
+              <ul className='dashboard-list'>
+                
+              </ul>
+            </div>
+            <div>{this.state.isSelectedData === false ? null : (
+              <QuestionDetail></QuestionDetail>
+            ) }</div>
           </div>
         )}
       </div>
@@ -83,11 +107,12 @@ class Dashboard extends Component {
   }
 }
 
-function mapStateToProps ({ users, authedUser }) {
+function mapStateToProps ({ users, authedUser, selectquestion }) {
   return {
     users: Object.values(users),
     loggedIn: authedUser !== null,
-    authedUser: authedUser
+    authedUser: authedUser,
+    selectquestion:selectquestion
   }
 }
 
