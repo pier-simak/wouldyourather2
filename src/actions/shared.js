@@ -1,4 +1,5 @@
 import { getInitialData } from '../utils/api'
+import { getUserData } from '../utils2/api'
 import { receiveUsers } from '../actions/users'
 import { receiveTweets } from '../actions/tweets'
 import { setAuthedUser } from '../actions/authedUser'
@@ -14,6 +15,17 @@ export function handleInitialData () {
         dispatch(receiveUsers(users))
         dispatch(receiveTweets(tweets))
         dispatch(setAuthedUser(AUTHED_ID))
+        dispatch(hideLoading())
+      })
+  }
+}
+
+export function handleUserData () {
+  return (dispatch) => {
+    dispatch(showLoading())
+    return getUserData()
+      .then(({ users }) => {
+        dispatch(receiveUsers(users))
         dispatch(hideLoading())
       })
   }

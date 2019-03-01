@@ -6,23 +6,32 @@ class Dashboard extends Component {
   render() {
     return (
       <div>
-        <h3 className='center'>Your Timeline</h3>
-        <ul className='dashboard-list'>
-          {this.props.tweetIds.map((id) => (
-            <li key={id}>
-              <Tweet id={id}/>
-            </li>
-          ))}
-        </ul>
+        {this.props.loggedIn === false ? (
+          <div>
+            <h3>Sign In</h3>
+          </div>
+        ) :
+        (
+          <div>
+          <h3 className='center'>Your Timeline</h3>
+          <ul className='dashboard-list'>
+            {this.props.users.map((user) => (
+              <li key={user.id}>
+                <div>{user.name}</div>
+              </li>
+            ))}
+          </ul>
+          </div>
+        )}
       </div>
     )
   }
 }
 
-function mapStateToProps ({ tweets }) {
+function mapStateToProps ({ users, authedUser }) {
   return {
-    tweetIds: Object.keys(tweets)
-      .sort((a,b) => tweets[b].timestamp - tweets[a].timestamp)
+    users: Object.values(users),
+    loggedIn: authedUser !== null
   }
 }
 
