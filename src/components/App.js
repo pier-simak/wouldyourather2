@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react'
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { handleUserData } from '../actions/shared'
 import Dashboard from './Dashboard'
@@ -9,7 +9,7 @@ import LeaderBoard from './LeaderBoard'
 import LogOutPage from './LogOutPage'
 import Nav from './Nav'
 import QuestionDetail from './QuestionDetail';
-
+import PageNotFound from './PageNotFound'
 class App extends Component {
   componentDidMount() {
     this.props.dispatch(handleUserData())
@@ -24,11 +24,14 @@ class App extends Component {
             {this.props.loading === true
               ? null
               : <div>
+                <Switch>
                   <Route path='/' exact component={Dashboard} />
                   <Route path='/new' component={NewQuestion} />
                   <Route path='/leaderboard' component={LeaderBoard} />
                   <Route path='/logout' component={LogOutPage} />
                   <Route path='/questions/:question_id' component={QuestionDetail} />
+                  <Route component={PageNotFound} />
+                </Switch>
                 </div>}
           </div>
         </Fragment>
