@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, StyleSheet} from 'react'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 class LeaderBoard extends Component {
@@ -13,6 +13,7 @@ class LeaderBoard extends Component {
             )
             .map((user) => 
                <div key={user.id}>
+                    <img src={user.avatarURL} style={photoStyles}/>
                     <div>{user.name}</div>
                     <div>{"Answered questions : "+Object.values(user.answers).length}</div>
                     <div>{"Created questions : "+user.questions.length}</div>
@@ -24,7 +25,10 @@ class LeaderBoard extends Component {
         )
     }
 }
-
+const photoStyles = {
+    height: '50px',
+    width: '50px'
+}
 function mapStateToProps ({users, authedUser}) {
     return {
       users: Object.values(users),
