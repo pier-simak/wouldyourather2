@@ -8,6 +8,7 @@ import NewQuestion from './NewQuestion.js'
 import LeaderBoard from './LeaderBoard'
 import LogOutPage from './LogOutPage'
 import Nav from './Nav'
+import QuestionDetail from './QuestionDetail';
 
 class App extends Component {
   componentDidMount() {
@@ -27,6 +28,7 @@ class App extends Component {
                   <Route path='/new' component={NewQuestion} />
                   <Route path='/leaderboard' component={LeaderBoard} />
                   <Route path='/logout' component={LogOutPage} />
+                  <Route path='/questions/:question_id' component={QuestionDetail} />
                 </div>}
           </div>
         </Fragment>

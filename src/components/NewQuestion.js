@@ -41,7 +41,7 @@ class NewQuestion extends Component {
   render() {
     const { optionOne, optionTwo, toHome } = this.state
 
-    if (toHome === true || this.props.loggedIn == false) {
+    if (toHome === true || this.props.loggedIn === false) {
       return <Redirect to='/' />
     }
 

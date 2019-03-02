@@ -2,8 +2,12 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { getNameById, checkOption } from '../utils2/api'
 import { handleSaveQuestionAnswer, handleUserData, handleQuestionData } from '../actions/shared'
+import { Redirect } from 'react-router-dom'
 
 class QuestionDetail extends Component {
+    state = {
+        toHome: false
+    }
     constructor(props) {
         super(props);
         this.btnvote1 = React.createRef();
@@ -20,13 +24,19 @@ class QuestionDetail extends Component {
     saveQuestionAnswer = (option) =>{
         this.btnvote1.style.display = "none"
         this.btnvote2.style.display = "none"
-        this.props.dispatch(handleSaveQuestionAnswer(this.props.authedUser,this.props.selectquestion,option))
+        this.props.dispatch(handleSaveQuestionAnswer(this.props.authedUser,this.props.match.params.question_id,option))
         this.props.dispatch(handleUserData())
         this.props.dispatch(handleQuestionData())
     }
+    backToHome = () => {
+        this.setState({toHome:true})
+    }
     render() {
-        let option = checkOption(this.props.users,this.props.authedUser,this.props.selectquestion)
-        let det = this.getQuestionDetail(this.props.selectquestion)
+        if (this.state.toHome === true || this.props.isLoggedIn === false) {
+            return <Redirect to='/' />
+        }
+        let option = checkOption(this.props.users,this.props.authedUser,this.props.match.params.question_id)
+        let det = this.getQuestionDetail(this.props.match.params.question_id)
         let vote1count = det.optionOne.votes.length
         let vote2count = det.optionTwo.votes.length
         let votetotal = vote1count+vote2count
@@ -57,7 +67,8 @@ class QuestionDetail extends Component {
                     <div>{vote2count+" out of "+votetotal+" votes ("+percent2+"%)"}</div>
                 </div>
             )}
-                
+            <p></p>
+            <button onClick={this.backToHome}>Back</button>
             </div>
         )
     }
@@ -68,7 +79,8 @@ function mapStateToProps ({ questions, users, selectquestion, authedUser }) {
     questions:questions,
     selectquestion:selectquestion,
     users:users,
-    authedUser:authedUser
+    authedUser:authedUser,
+    loggedIn: authedUser !== null,
   }
 }
 

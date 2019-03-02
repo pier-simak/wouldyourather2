@@ -97,13 +97,6 @@ class Dashboard extends Component {
                 
               </ul>
             </div>
-            <div>{this.state.isSelectedData === false ? null : (
-              <div className="center">
-                <QuestionDetail></QuestionDetail>
-                <p></p>
-                <button onClick={this.hideContainer}>Back</button>
-              </div> 
-            ) }</div>
           </div>
         )}
       </div>
