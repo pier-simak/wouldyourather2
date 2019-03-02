@@ -32,11 +32,14 @@ class QuestionDetail extends Component {
         this.setState({toHome:true})
     }
     render() {
-        if (this.state.toHome === true || this.props.isLoggedIn === false) {
+        if (this.state.toHome === true) {
             return <Redirect to='/' />
         }
         let option = checkOption(this.props.users,this.props.authedUser,this.props.match.params.question_id)
         let det = this.getQuestionDetail(this.props.match.params.question_id)
+        if(det === undefined){
+            return <Redirect to='/error' />
+        }
         let vote1count = det.optionOne.votes.length
         let vote2count = det.optionTwo.votes.length
         let votetotal = vote1count+vote2count

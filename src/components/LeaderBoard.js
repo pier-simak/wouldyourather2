@@ -1,11 +1,7 @@
 import React, { Component, StyleSheet} from 'react'
 import { connect } from 'react-redux'
-import { Redirect } from 'react-router-dom'
 class LeaderBoard extends Component {
     render(){
-        if (this.props.loggedIn === false) {
-            return <Redirect to='/' />
-        }
         return(
             <div className='center'>
             {this.props.users.sort((a,b) =>

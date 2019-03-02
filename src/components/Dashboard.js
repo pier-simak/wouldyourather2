@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { handleLogin } from '../actions/shared'
+import { handleLogin, handleQuestionData } from '../actions/shared'
 import QuestionList from './QuestionList'
-import QuestionDetail from './QuestionDetail'
+import { Redirect } from 'react-router-dom'
 
 function UserData(props){
   let user = props.users.filter( function (data) {
@@ -22,7 +22,8 @@ class Dashboard extends Component {
     this.container = React.createRef();
   }
   state = {
-    isSelectedData: false
+    isSelectedData: false,
+    redirectToReferrer: false
   }
 
   setSelectData = (con) => {
@@ -31,6 +32,9 @@ class Dashboard extends Component {
   Login = (id) => {
     if(id !== "none"){
       this.props.dispatch(handleLogin(id))
+      this.setState(() => ({
+        redirectToReferrer: true
+      }))
     }
   }
   
@@ -59,7 +63,17 @@ class Dashboard extends Component {
       this.setSelectData(true)
     }
   }
+  componentDidMount(){
+    this.props.dispatch(handleQuestionData())
+  }
   render() {
+
+    const { from } = this.props.location.state || { from: { pathname: '/' } }
+    const { redirectToReferrer } = this.state
+    if (redirectToReferrer === true && from.pathname !== '/') {
+      return <Redirect to={from} />
+    }
+
     return (
       <div>
         {this.props.loggedIn === false ? (

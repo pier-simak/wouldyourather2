@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { handleUserData } from '../actions/shared'
 import Dashboard from './Dashboard'
@@ -26,10 +26,11 @@ class App extends Component {
               : <div>
                 <Switch>
                   <Route path='/' exact component={Dashboard} />
-                  <Route path='/new' component={NewQuestion} />
-                  <Route path='/leaderboard' component={LeaderBoard} />
-                  <Route path='/logout' component={LogOutPage} />
-                  <Route path='/questions/:question_id' component={QuestionDetail} />
+                  <PrivateRoute path='/new' component={NewQuestion} loggedIn={this.props.loggedIn} />
+                  <PrivateRoute path='/leaderboard' component={LeaderBoard} loggedIn={this.props.loggedIn} />
+                  <PrivateRoute path='/logout' component={LogOutPage} loggedIn={this.props.loggedIn} />
+                  <PrivateRoute path='/questions/:question_id' component={QuestionDetail} loggedIn={this.props.loggedIn}/>
+                  <Route component='/error' component={PageNotFound} />
                   <Route component={PageNotFound} />
                 </Switch>
                 </div>}
@@ -40,10 +41,22 @@ class App extends Component {
   }
 }
 
-function mapStateToProps ({ users, authedUser }) {
+const PrivateRoute = ({ component: Component, ...rest, loggedIn }) => (
+  <Route {...rest} render={(props) => (
+    loggedIn === true
+      ? <Component {...props} />
+      : <Redirect to={{
+          pathname: '/',
+          state: { from: props.location }
+        }} />
+  )} />
+)
+
+function mapStateToProps ({ users, authedUser, questions }) {
   return {
     loading: Object.values(users).length === 0,
-    loggedIn: authedUser !== null
+    loggedIn: authedUser !== null,
+    questions:questions
   }
 }
 

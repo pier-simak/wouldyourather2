@@ -6,7 +6,9 @@ import { getNameById } from '../utils2/api'
 function Answered(props){
     return (
         <div><h4>Answered Question</h4>
-            {Object.values(props.q).map(qu => {
+            {Object.values(props.q)
+            .sort((a,b) => b.timestamp - a.timestamp)
+            .map(qu => {
                 return props.checkAnsweredBy(qu.id,props.authedUser) === true ?
                 <QuestionCard
                     hideContainer={props.hideContainer}
@@ -22,7 +24,9 @@ function Answered(props){
 function Unanswered(props){
     return (
         <div><h4>Unanswered Question</h4>
-            {Object.values(props.q).map(qu => {
+            {Object.values(props.q)
+            .sort((a,b) => b.timestamp - a.timestamp)
+            .map(qu => {
                 return props.checkAnsweredBy(qu.id,props.authedUser) === false ?
                 <QuestionCard
                     hideContainer={props.hideContainer}
